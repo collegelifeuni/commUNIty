@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>commUNIty — 找到真的能一起做事的人</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --purple: #7c3aed;
+    --purple-light: #a78bfa;
+    --purple-mid: #8b5cf6;
+    --pink: #d946ef;
+    --text-primary: #0f0a1e;
+    --text-muted: #4b4569;
+    --text-hint: #9c8fc0;
+    --card-border: rgba(124,58,237,0.18);
+    --input-bg: rgba(255,255,255,0.55);
+    --input-border: rgba(167,139,250,0.35);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: #edeae5;
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── Decorative Background ── */
+  .deco-layer {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .deco-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(48px);
+  }
+  .deco-blob-1 {
+    width: 520px; height: 420px;
+    background: radial-gradient(circle, rgba(130,118,255,0.82), transparent 65%);
+    top: -8%; left: -6%;
+    animation: float1 13s ease-in-out infinite;
+  }
+  .deco-blob-2 {
+    width: 440px; height: 380px;
+    background: radial-gradient(circle, rgba(124,58,237,0.78), transparent 65%);
+    top: -5%; right: -6%;
+    animation: float2 16s ease-in-out infinite;
+  }
+  .deco-blob-3 {
+    width: 400px; height: 380px;
+    background: radial-gradient(circle, rgba(224,80,140,0.72), transparent 65%);
+    bottom: -8%; right: -5%;
+    animation: float3 11s ease-in-out infinite;
+  }
+  .deco-blob-4 {
+    width: 380px; height: 340px;
+    background: radial-gradient(circle, rgba(255,150,100,0.65), transparent 65%);
+    bottom: -6%; left: -5%;
+    animation: float1 9s ease-in-out infinite reverse;
+  }
+  .deco-blob-5 {
+    width: 300px; height: 280px;
+    background: radial-gradient(circle, rgba(240,120,165,0.68), transparent 65%);
+    top: 42%; right: -4%;
+    animation: float2 12s ease-in-out infinite reverse;
+  }
+
+  /* ── Frost overlay — 磨砂玻璃效果 ── */
+  .frost-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    background: rgba(237,234,229,0.28);
+    backdrop-filter: blur(36px);
+    -webkit-backdrop-filter: blur(36px);
+    pointer-events: none;
+  }
+
+
+  @keyframes float1 { 0%,100%{transform:translateY(0) translateX(0)} 40%{transform:translateY(-22px) translateX(9px)} 70%{transform:translateY(11px) translateX(-5px)} }
+  @keyframes float2 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-26px) translateX(-13px)} }
+  @keyframes float3 { 0%,100%{transform:translateY(0)} 60%{transform:translateY(-16px) translateX(15px)} }
+
+  /* ── Nav ── */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 52px;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: rgba(237,234,229,0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+  .logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--text-primary);
+    letter-spacing: 0.5px;
+  }
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    font-size: 13px;
+    color: var(--text-hint);
+    letter-spacing: 0.5px;
+  }
+  .nav-links a { color: inherit; text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--purple); }
+
+  /* ── Hero Section ── */
+  .hero-section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding-top: 72px;
+  }
+
+  .hero-center {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 24px 80px;
+    position: relative;
+    z-index: 5;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(124,58,237,0.06);
+    border: 1px solid rgba(124,58,237,0.18);
+    border-radius: 999px;
+    padding: 5px 16px;
+    font-size: 12px;
+    color: var(--purple);
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-bottom: 36px;
+  }
+  .badge-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #55cf82;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }
+
+  .hero-heading {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(60px, 11vw, 112px);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -4px;
+    color: #0f0a1e;
+    margin-bottom: 30px;
+  }
+  .hero-heading em {
+    font-style: normal;
+    background: linear-gradient(90deg, #7c3aed 0%, #d946ef 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.75;
+    font-weight: 400;
+    margin-bottom: 52px;
+    max-width: 400px;
+    letter-spacing: 0.1px;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #0f0a1e;
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    padding: 18px 52px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+  }
+  .hero-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 36px rgba(124,58,237,0.22);
+    background: #1a0f3e;
+  }
+  .hero-cta:active { transform: scale(0.98); }
+
+  /* ── Features strip in hero ── */
+  .hero-features {
+    display: flex;
+    gap: 32px;
+    margin-top: 64px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .hero-feature-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-hint);
+  }
+  .hero-feature-item svg {
+    color: var(--purple-light);
+    flex-shrink: 0;
+  }
+
+  /* ── Form Section ── */
+  .form-section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 24px;
+    position: relative;
+  }
+
+/* ── Card ── */
+  .glass-card {
+    background: rgba(255,255,255,0.72);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.6);
+    border-radius: 24px;
+    padding: 32px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 8px 48px rgba(124,58,237,0.08), 0 2px 8px rgba(0,0,0,0.03);
+    position: relative;
+    z-index: 1;
+  }
+
+  .card-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--purple);
+    margin-bottom: 14px;
+    text-align: center;
+    letter-spacing: 0.3px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  /* ── School custom dropdown ── */
+  .school-wrap { position: relative; }
+  .school-clear {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: none;
+    font-size: 14px;
+    color: #aaa;
+    padding: 0;
+    line-height: 1;
+    transition: color 0.15s;
+    z-index: 10;
+  }
+  .school-clear:hover { color: #666; }
+  .school-clear.show { display: block; }
+  .school-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0; right: 0;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(124,58,237,0.18);
+    border-radius: 14px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    z-index: 500;
+    overflow: hidden;
+  }
+  .school-dropdown.open { display: block; }
+  .dropdown-section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--text-hint);
+    padding: 10px 14px 6px;
+  }
+  .dropdown-list {
+    max-height: 220px;
+    overflow-y: auto;
+    padding-bottom: 6px;
+  }
+  .dropdown-list::-webkit-scrollbar { width: 4px; }
+  .dropdown-list::-webkit-scrollbar-track { background: transparent; }
+  .dropdown-list::-webkit-scrollbar-thumb { background: rgba(124,58,237,0.2); border-radius: 2px; }
+  .dropdown-item {
+    padding: 10px 14px;
+    font-size: 14px;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: background 0.12s;
+    font-family: 'Outfit', sans-serif;
+  }
+  .dropdown-item:hover { background: rgba(124,58,237,0.07); }
+  .dropdown-item.highlighted { background: rgba(124,58,237,0.1); }
+  .dropdown-empty {
+    padding: 14px;
+    font-size: 13px;
+    color: var(--text-hint);
+    text-align: center;
+  }
+
+  .glass-input {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-size: 14px;
+    color: var(--text-primary);
+    font-family: 'Outfit', sans-serif;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+    width: 100%;
+  }
+  .glass-input::placeholder { color: var(--text-hint); }
+  .glass-input:focus {
+    border-color: rgba(124,58,237,0.55);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(124,58,237,0.08);
+  }
+  .glass-input.error { border-color: rgba(217,70,239,0.65); }
+
+  .error-msg {
+    font-size: 12px;
+    color: #be185d;
+    margin-top: -6px;
+    display: none;
+  }
+  .error-msg.show { display: block; }
+
+  .cta-btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #d946ef 100%);
+    border: none;
+    border-radius: 12px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    letter-spacing: 0.3px;
+    transition: opacity 0.2s, transform 0.15s;
+    margin-top: 4px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0);
+    transition: background 0.2s;
+  }
+  .cta-btn:hover::after { background: rgba(255,255,255,0.08); }
+  .cta-btn:hover { transform: translateY(-1px); }
+  .cta-btn:active { transform: scale(0.98); }
+  .cta-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  .social-proof {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 16px;
+  }
+  .avatars { display: flex; }
+  .av {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    margin-left: -9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 600;
+    color: #fff;
+  }
+  .av:first-child { margin-left: 0; }
+  .av-1 { background: #7c3aed; }
+  .av-2 { background: #0891b2; }
+  .av-3 { background: #d946ef; }
+  .av-4 { background: #059669; }
+  .av-5 { background: #f59e0b; }
+
+  .proof-text { font-size: 12px; color: var(--text-hint); }
+  .proof-text strong { color: var(--purple-mid); }
+
+  /* ── Step 2 ── */
+  .step2 { display: none; flex-direction: column; gap: 0; }
+  .step2.show { display: flex; }
+
+  .success-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .check-circle {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #7c3aed, #d946ef);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+  }
+  .success-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .success-sub {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .section-label {
+    font-size: 13px;
+    color: var(--purple);
+    font-weight: 500;
+    margin-bottom: 12px;
+    margin-top: 20px;
+  }
+
+  .tags-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .tag {
+    background: rgba(124,58,237,0.06);
+    border: 1px solid rgba(124,58,237,0.2);
+    border-radius: 999px;
+    padding: 7px 16px;
+    font-size: 13px;
+    color: var(--purple);
+    cursor: pointer;
+    transition: all 0.15s;
+    user-select: none;
+    font-family: 'Outfit', sans-serif;
+  }
+  .tag:hover {
+    background: rgba(124,58,237,0.12);
+    border-color: rgba(124,58,237,0.4);
+  }
+  .tag.active {
+    background: rgba(124,58,237,0.18);
+    border-color: rgba(124,58,237,0.55);
+    color: #5b21b6;
+    font-weight: 500;
+  }
+
+  .glass-textarea {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: var(--text-primary);
+    font-family: 'Outfit', sans-serif;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+    width: 100%;
+    resize: none;
+    line-height: 1.6;
+  }
+  .glass-textarea::placeholder { color: var(--text-hint); }
+  .glass-textarea:focus {
+    border-color: rgba(124,58,237,0.55);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(124,58,237,0.08);
+  }
+
+  .submit2-btn {
+    width: 100%;
+    margin-top: 16px;
+    padding: 14px;
+    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #d946ef 100%);
+    border: none;
+    border-radius: 12px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    letter-spacing: 0.3px;
+    transition: transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(124,58,237,0.35);
+    position: relative;
+    overflow: hidden;
+  }
+  .submit2-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0);
+    transition: background 0.2s;
+  }
+  .submit2-btn:hover::after { background: rgba(255,255,255,0.08); }
+  .submit2-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 28px rgba(124,58,237,0.45);
+  }
+  .submit2-btn:active { transform: scale(0.98); }
+  .submit2-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
+
+  .done-msg {
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 12px;
+    display: none;
+  }
+  .done-msg.show { display: block; }
+
+  .referral-box {
+    background: rgba(124,58,237,0.05);
+    border: 1px solid rgba(124,58,237,0.14);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-top: 16px;
+    display: none;
+  }
+  .referral-box.show { display: block; }
+  .referral-label {
+    font-size: 12px;
+    color: var(--text-hint);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .referral-row { display: flex; gap: 8px; }
+  .referral-url {
+    flex: 1;
+    background: rgba(255,255,255,0.85);
+    border: 1px solid rgba(124,58,237,0.14);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: 'Outfit', sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .copy-btn {
+    background: rgba(124,58,237,0.1);
+    border: 1px solid rgba(124,58,237,0.22);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 12px;
+    font-family: 'Outfit', sans-serif;
+    color: var(--purple);
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .copy-btn:hover { background: rgba(124,58,237,0.18); }
+
+  /* ── Responsive ── */
+  /* ── Contact Page Overlay ── */
+  .contact-page {
+    position: fixed;
+    inset: 0;
+    z-index: 1001;
+    display: none;
+    flex-direction: column;
+    overflow-y: auto;
+    background: #edeae5;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.28s ease, transform 0.28s ease;
+  }
+  .contact-page.open {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  /* contact page 自己的裝飾 blob */
+  .contact-deco {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .contact-deco .deco-blob { position: absolute; border-radius: 50%; filter: blur(48px); }
+  .contact-deco .cb1 {
+    width: 480px; height: 380px;
+    background: radial-gradient(circle, rgba(130,118,255,0.7), transparent 65%);
+    top: -60px; right: 5%;
+  }
+  .contact-deco .cb2 {
+    width: 360px; height: 320px;
+    background: radial-gradient(circle, rgba(224,80,140,0.6), transparent 65%);
+    bottom: 5%; left: 5%;
+  }
+  .contact-deco .cb3 {
+    width: 260px; height: 240px;
+    background: radial-gradient(circle, rgba(240,120,165,0.55), transparent 65%);
+    top: 35%; left: 30%;
+  }
+  /* frost */
+  .contact-frost {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: rgba(237,234,229,0.28);
+    backdrop-filter: blur(36px);
+    -webkit-backdrop-filter: blur(36px);
+    pointer-events: none;
+  }
+  .contact-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 52px;
+    background: rgba(237,234,229,0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+  }
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.2s;
+    width: 80px;
+  }
+  .back-btn:hover { color: var(--purple); }
+  .contact-inner {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 24px 80px;
+    position: relative;
+    z-index: 2;
+  }
+  .contact-done {
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 12px;
+    display: none;
+  }
+  .contact-done.show { display: block; }
+
+  /* ── Hamburger (desktop 隱藏) ── */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    z-index: 20;
+  }
+  .hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--text-primary);
+    border-radius: 2px;
+    transition: all 0.25s;
+  }
+
+  @media (max-width: 768px) {
+    /* ── Nav ── */
+    nav {
+      padding: 16px 20px;
+    }
+    .nav-links {
+      display: none;
+      position: fixed;
+      top: 56px;
+      left: 0; right: 0;
+      background: rgba(253,249,251,0.96);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      flex-direction: column;
+      gap: 0;
+      padding: 8px 0 12px;
+      border-bottom: 1px solid rgba(124,58,237,0.08);
+      z-index: 999;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a {
+      padding: 12px 24px;
+      font-size: 15px;
+    }
+    .hamburger { display: flex; }
+
+    /* ── Hero ── */
+    .hero-center { padding: 0 20px 60px; }
+    .hero-heading {
+      font-size: clamp(48px, 13vw, 72px);
+      letter-spacing: -2px;
+    }
+    .hero-sub {
+      font-size: 14px;
+      max-width: 280px;
+      margin-bottom: 40px;
+    }
+    .hero-cta { padding: 16px 40px; font-size: 13px; }
+    .hero-features { display: none; }
+    .badge { margin-bottom: 28px; }
+
+    /* ── Form ── */
+    .form-section { padding: 20px 16px; }
+    .contact-nav { padding: 16px 20px; }
+    .contact-inner { padding: 24px 16px 60px; }
+    .glass-card {
+      padding: 24px 20px;
+      border-radius: 20px;
+    }
+    .success-header { margin-bottom: 14px; }
+    .section-label { margin-top: 12px; margin-bottom: 8px; }
+    .tags-grid { gap: 6px; }
+    .tag { padding: 6px 14px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ──────────── Shared Background ──────────── -->
+<div class="deco-layer">
+  <div class="deco-blob deco-blob-1"></div>
+  <div class="deco-blob deco-blob-2"></div>
+  <div class="deco-blob deco-blob-3"></div>
+  <div class="deco-blob deco-blob-4"></div>
+  <div class="deco-blob deco-blob-5"></div>
+</div>
+
+<div class="frost-overlay"></div>
+
+<!-- ──────────── HERO SECTION ──────────── -->
+<section class="hero-section" id="heroSection">
+  <nav>
+    <div class="logo" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="cursor:pointer;">commUNIty</div>
+    <div class="nav-links" id="navLinks">
+      <a href="#">關於</a>
+      <a href="#">功能</a>
+      <a href="#" onclick="scrollToContact(); return false;">聯絡</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="選單">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <div class="hero-center">
+    <div class="badge">
+      <div class="badge-dot"></div>
+      大學生專屬平台
+    </div>
+
+    <h1 class="hero-heading">找到真的能<br>一起<em>做事</em>的人</h1>
+
+    <p class="hero-sub">
+      Side project、創業 MVP、作品集──找到志同道合的同學，一起交流、組隊、創作。
+    </p>
+
+    <button class="hero-cta" onclick="scrollToForm()">
+      加入等待名單
+      <i data-lucide="arrow-right" style="width:16px;height:16px;stroke-width:2.5;"></i>
+    </button>
+
+    <div class="hero-features">
+      <div class="hero-feature-item">
+        <i data-lucide="rocket" style="width:15px;height:15px;stroke-width:1.75;"></i>
+        <span>專案執行</span>
+      </div>
+      <div class="hero-feature-item">
+        <i data-lucide="palette" style="width:15px;height:15px;stroke-width:1.75;"></i>
+        <span>想法交流</span>
+      </div>
+      <div class="hero-feature-item">
+        <i data-lucide="globe" style="width:15px;height:15px;stroke-width:1.75;"></i>
+        <span>跨校系連結</span>
+      </div>
+      <div class="hero-feature-item">
+        <i data-lucide="briefcase" style="width:15px;height:15px;stroke-width:1.75;"></i>
+        <span>企業機會</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ──────────── FORM SECTION ──────────── -->
+<section class="form-section" id="formSection">
+  <div class="card-title"> ✦ 加入等待名單，搶先體驗 </div>
+
+  <div class="glass-card">
+
+    <!-- Step 1 -->
+    <div id="step1">
+      <div class="field-group">
+        <input class="glass-input" type="text" id="nameInput" placeholder="你的名字" autocomplete="off" />
+        <div class="school-wrap">
+          <input class="glass-input" type="text" id="schoolInput" placeholder="輸入學校名稱搜尋..." autocomplete="off" style="padding-right:36px;" />
+          <button class="school-clear" id="schoolClear" tabindex="-1">✕</button>
+          <div class="school-dropdown" id="schoolDropdown">
+            <div class="dropdown-section-label" id="dropdownLabel">熱門學校</div>
+            <div class="dropdown-list" id="schoolList"></div>
+          </div>
+        </div>
+        <input class="glass-input" type="email" id="emailInput" placeholder="Email" autocomplete="off" />
+        <div class="error-msg" id="errorMsg">請填寫姓名、學校與有效的 Email</div>
+      </div>
+      <button class="cta-btn" id="submitBtn" onclick="handleStep1()">
+        加入等待名單 →
+      </button>
+      <div class="social-proof">
+        <div class="avatars">
+          <div class="av av-1">小</div>
+          <div class="av av-2">林</div>
+          <div class="av av-3">陳</div>
+          <div class="av av-4">王</div>
+          <div class="av av-5">李</div>
+        </div>
+        <span class="proof-text">已有 <strong id="memberCount">247</strong> 位 同學加入等待</span>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step2" id="step2">
+      <div class="success-header">
+        <div class="check-circle">
+          <i data-lucide="check" style="width:26px;height:26px;stroke-width:2.5;color:#fff;"></i>
+        </div>
+        <div class="success-title">你已加入等待名單！</div>
+        <div class="success-sub">再花 30 秒告訴我們你的需求<br>讓我們做出更適合你的平台</div>
+      </div>
+
+      <div class="section-label">你最希望平台幫你完成什麼？（可多選）</div>
+      <div class="tags-grid" id="tagsGrid">
+        <div class="tag" onclick="toggleTag(this)">找 co-founder</div>
+        <div class="tag" onclick="toggleTag(this)">想交新朋友...</div>
+        <div class="tag" onclick="toggleTag(this)">side project 夥伴</div>
+        <div class="tag" onclick="toggleTag(this)">探索興趣</div>
+        <div class="tag" onclick="toggleTag(this)">競賽組隊</div>
+        <div class="tag" onclick="toggleTag(this)">想法交流</div>
+        <div class="tag" onclick="toggleTag(this)">接觸企業</div>
+        <div class="tag" onclick="toggleTag(this)">其他</div>
+      </div>
+      <div id="otherTagWrap" style="overflow:hidden; max-height:0; transition:max-height 0.25s ease, margin-top 0.25s ease; margin-top:0;">
+        <input class="glass-input" type="text" id="otherText" placeholder="請輸入..." style="width:100%; margin-top:8px;" />
+      </div>
+
+      <div class="section-label" style="margin-top:20px;">你對平台最大的期待是什麼？</div>
+      <textarea class="glass-textarea" id="expectInput" rows="3" placeholder="隨意說說，越具體越好..."></textarea>
+
+      <button class="submit2-btn" id="submitBtn2" onclick="handleStep2()">
+        送出 →
+      </button>
+      <div class="error-msg" id="errorMsg2" style="text-align:center;">請至少填寫其中一題</div>
+
+      <div class="done-msg" id="doneMsg">
+        收到了，謝謝你！我們會在平台準備好時第一時間通知你
+      </div>
+
+      <div class="referral-box" id="referralBox">
+        <div class="referral-label">
+          <i data-lucide="megaphone" style="width:12px;height:12px;stroke-width:1.75;"></i>
+          分享給朋友，一起加入等待名單
+        </div>
+        <div class="referral-row">
+          <div class="referral-url" id="referralUrl">https://你的網址.github.io</div>
+          <button class="copy-btn" onclick="copyLink()">複製連結</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ──────────── CONTACT PAGE OVERLAY ──────────── -->
+<div id="contactPage" class="contact-page">
+  <div class="contact-deco">
+    <div class="deco-blob cb1"></div>
+    <div class="deco-blob cb2"></div>
+    <div class="deco-blob cb3"></div>
+  </div>
+  <div class="contact-frost"></div>
+  <nav class="contact-nav">
+    <button class="back-btn" onclick="closeContact()">
+      <i data-lucide="arrow-left" style="width:18px;height:18px;stroke-width:2.5;"></i>
+    </button>
+    <div class="logo" onclick="closeContact()" style="cursor:pointer;">commUNIty</div>
+    <div style="width:80px;"></div>
+  </nav>
+  <div class="contact-inner">
+    <div class="card-title"> ✦ 有任何想說的，歡迎聯絡我們 </div>
+    <div class="glass-card">
+      <div class="field-group">
+        <input class="glass-input" type="email" id="contactEmail" placeholder="你的 Email" autocomplete="off" />
+        <textarea class="glass-textarea" id="contactMsg" rows="5" placeholder="想說的話、建議、合作邀約..."></textarea>
+        <div class="error-msg" id="contactError">請填寫 Email 與訊息內容</div>
+      </div>
+      <button class="cta-btn" id="contactBtn" onclick="handleContact()">送出訊息 →</button>
+      <div class="contact-done" id="contactDone">已收到，我們會盡快回覆你！</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── 學校清單 ──
+  const SCHOOLS = ["國立臺灣大學","國立清華大學","國立陽明交通大學","國立成功大學","國立政治大學","國立中央大學","國立中興大學","國立中山大學","國立中正大學","國立臺灣師範大學","國立臺灣科技大學","國立臺北科技大學","國立臺北大學","國立臺灣海洋大學","國立彰化師範大學","國立高雄師範大學","國立雲林科技大學","國立臺灣藝術大學","國立臺北藝術大學","國立暨南國際大學","國立東華大學","國立高雄大學","國立嘉義大學","國立臺北教育大學","國立臺中教育大學","臺北市立大學","國立高雄科技大學","國立宜蘭大學","國立屏東大學","國立臺南大學","國立聯合大學","國立臺東大學","國立金門大學","國立體育大學","國立臺灣體育運動大學","國立勤益科技大學","國立虎尾科技大學","國立屏東科技大學","國立臺中科技大學","國立澎湖科技大學","國立臺南藝術大學","國立臺灣戲曲學院","國立空中大學","高雄市立空中大學","輔仁大學","東吳大學","淡江大學","逢甲大學","東海大學","中原大學","中國文化大學","銘傳大學","世新大學","元智大學","實踐大學","靜宜大學","臺北醫學大學","長庚大學","中國醫藥大學","高雄醫學大學","中山醫學大學","亞洲大學","朝陽科技大學","大葉大學","大同大學","義守大學","長榮大學","南華大學","真理大學","佛光大學","玄奘大學","中華大學","開南大學","康寧大學","華梵大學","慈濟大學","馬偕醫學院","中信金融管理學院","南臺科技大學","崑山科技大學","樹德科技大學","龍華科技大學","弘光科技大學","正修科技大學","嶺東科技大學","亞東科技大學","明新科技大學","景文科技大學","聖約翰科技大學","醒吾科技大學","萬能科技大學","建國科技大學","元培醫事科技大學","台北城市科技大學","育達科技大學","吳鳳科技大學","大仁科技大學","遠東科技大學","東南科技大學","修平科技大學","大華科技大學","僑光科技大學","南亞技術學院","台鋼科技大學","南開科技大學","桃園創新技術學院","蘭陽技術學院","稻江科技暨管理學院","國防大學","國防醫學院","中央警察大學","陸軍軍官學校","海軍軍官學校","空軍軍官學校","法鼓文理學院","台灣浸會神學院","台北基督學院","道生神學院","台灣神學研究學院","華語神學研究院"];
+
+  // ── 學校下拉邏輯 ──
+  const schoolInput = document.getElementById('schoolInput');
+  const schoolDropdown = document.getElementById('schoolDropdown');
+  const schoolListEl = document.getElementById('schoolList');
+  const dropdownLabel = document.getElementById('dropdownLabel');
+
+  function renderDropdown(query) {
+    const q = query.trim();
+    const matches = q ? SCHOOLS.filter(s => s.includes(q)) : SCHOOLS;
+    dropdownLabel.textContent = q ? '搜尋結果' : '';
+    dropdownLabel.style.display = q ? 'block' : 'none';
+    schoolListEl.innerHTML = '';
+    if (matches.length === 0) {
+      schoolListEl.innerHTML = '<div class="dropdown-empty">找不到符合的學校</div>';
+    } else {
+      matches.forEach(name => {
+        const item = document.createElement('div');
+        item.className = 'dropdown-item';
+        item.textContent = name;
+        item.addEventListener('mousedown', e => {
+          e.preventDefault();
+          schoolInput.value = name;
+          schoolDropdown.classList.remove('open');
+          updateClear();
+        });
+        schoolListEl.appendChild(item);
+      });
+    }
+  }
+
+  const schoolClear = document.getElementById('schoolClear');
+
+  function updateClear() {
+    schoolClear.classList.toggle('show', schoolInput.value.length > 0);
+  }
+
+  schoolClear.addEventListener('mousedown', e => {
+    e.preventDefault();
+    schoolInput.value = '';
+    updateClear();
+    renderDropdown('');
+    schoolDropdown.classList.add('open');
+    schoolInput.focus();
+  });
+
+  schoolInput.addEventListener('focus', () => {
+    renderDropdown(schoolInput.value);
+    schoolDropdown.classList.add('open');
+  });
+  schoolInput.addEventListener('input', () => {
+    renderDropdown(schoolInput.value);
+    updateClear();
+  });
+  schoolInput.addEventListener('blur', () => {
+    setTimeout(() => schoolDropdown.classList.remove('open'), 150);
+  });
+
+  // ── 設定區 ──
+  const FORM_ID = '1FAIpQLSeWW774piPHUCKVNuR0OGzYzJ56MHgtgoMRgLxxvlJ6KQvlrg';
+  const ENTRY = {
+    name:   'entry.538942384',
+    school: 'entry.2121520056',
+    email:  'entry.1155178546',
+    tags:   'entry.16795720',
+    expect: 'entry.2048573265',
+    contact: 'entry.1825339179',
+  };
+  const SITE_URL = 'https://你的網址.github.io';
+  const FORM_URL = `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse`;
+
+  const SHEET_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRisHi2woYaC2FsETQ5oiy7KQWC2_bqKK3DWJVpN17eerXYzVa_WrJUtStI1t1FWQgJmZxPiXtKRjp5/pub?output=csv';
+
+  fetch(SHEET_CSV)
+    .then(r => r.text())
+    .then(csv => {
+      const rows = csv.trim().split('\n').filter(r => r.trim()).length;
+      const count = Math.max(0, rows - 1); // 減去標題列
+      document.getElementById('memberCount').textContent = count;
+    })
+    .catch(() => {});
+
+  let submittedData = {};
+  let selectedTags = new Set();
+
+  function scrollToForm() {
+    document.getElementById('formSection').scrollIntoView({ behavior: 'smooth' });
+  }
+  function scrollToContact() {
+    const page = document.getElementById('contactPage');
+    page.style.display = 'flex';
+    requestAnimationFrame(() => page.classList.add('open'));
+    document.body.style.overflow = 'hidden';
+    lucide.createIcons();
+  }
+  function closeContact() {
+    const page = document.getElementById('contactPage');
+    page.classList.remove('open');
+    setTimeout(() => {
+      page.style.display = 'none';
+      document.body.style.overflow = '';
+    }, 250);
+  }
+
+  async function handleContact() {
+    const email = document.getElementById('contactEmail').value.trim();
+    const msg   = document.getElementById('contactMsg').value.trim();
+    const errorEl = document.getElementById('contactError');
+    const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+    if (!emailValid || !msg) {
+      errorEl.classList.add('show');
+      return;
+    }
+    errorEl.classList.remove('show');
+
+    const btn = document.getElementById('contactBtn');
+    btn.disabled = true;
+    btn.textContent = '送出中...';
+
+    const combined = `Email: ${email}\n\n${msg}`;
+    const body = new URLSearchParams({ [ENTRY.contact]: combined });
+
+    try {
+      await fetch(FORM_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: body.toString(),
+      });
+    } catch(e) {}
+
+    btn.style.display = 'none';
+    document.getElementById('contactDone').classList.add('show');
+  }
+
+  async function handleStep1() {
+    const name  = document.getElementById('nameInput').value.trim();
+    const school = document.getElementById('schoolInput').value.trim();
+    const email = document.getElementById('emailInput').value.trim();
+    const errorMsg = document.getElementById('errorMsg');
+
+    const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if (!name || !school || !emailValid) {
+      errorMsg.classList.add('show');
+      if (!name) document.getElementById('nameInput').classList.add('error');
+      if (!school) document.getElementById('schoolInput').classList.add('error');
+      if (!emailValid) document.getElementById('emailInput').classList.add('error');
+      return;
+    }
+    errorMsg.classList.remove('show');
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = '送出中...';
+
+    submittedData = { name, school, email };
+
+    const body = new URLSearchParams({
+      [ENTRY.name]:   name,
+      [ENTRY.school]: school,
+      [ENTRY.email]:  email,
+    });
+
+    try {
+      await fetch(FORM_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: body.toString(),
+      });
+    } catch(e) {}
+
+    document.getElementById('step1').style.display = 'none';
+    document.getElementById('step2').classList.add('show');
+    document.querySelector('.card-title').style.display = 'none';
+    lucide.createIcons();
+  }
+
+  function toggleTag(el) {
+    el.classList.toggle('active');
+    const label = el.textContent.trim();
+    if (selectedTags.has(label)) {
+      selectedTags.delete(label);
+    } else {
+      selectedTags.add(label);
+    }
+    if (label === '其他') {
+      const wrap = document.getElementById('otherTagWrap');
+      if (selectedTags.has('其他')) {
+        wrap.style.maxHeight = '60px';
+        wrap.style.marginTop = '4px';
+        document.getElementById('otherText').focus();
+      } else {
+        wrap.style.maxHeight = '0';
+        wrap.style.marginTop = '0';
+        document.getElementById('otherText').value = '';
+      }
+    }
+  }
+
+  async function handleStep2() {
+    const expect = document.getElementById('expectInput').value.trim();
+    const errorMsg2 = document.getElementById('errorMsg2');
+
+    if (selectedTags.size === 0 && !expect) {
+      errorMsg2.classList.add('show');
+      return;
+    }
+    errorMsg2.classList.remove('show');
+
+    const btn2 = document.getElementById('submitBtn2');
+    btn2.disabled = true;
+    btn2.textContent = '送出中...';
+
+    const params = new URLSearchParams();
+    params.append(ENTRY.name,   submittedData.name);
+    params.append(ENTRY.school, submittedData.school);
+    params.append(ENTRY.email,  submittedData.email);
+    selectedTags.forEach(tag => {
+      if (tag === '其他') {
+        params.append(ENTRY.tags, '__other_option__');
+        const otherVal = document.getElementById('otherText').value.trim();
+        if (otherVal) params.append(ENTRY.tags + '.other_option_response', otherVal);
+      } else {
+        params.append(ENTRY.tags, tag);
+      }
+    });
+    if (expect) params.append(ENTRY.expect, expect);
+
+    try {
+      await fetch(FORM_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: params.toString(),
+      });
+    } catch(e) {}
+
+    btn2.style.display = 'none';
+    document.getElementById('doneMsg').classList.add('show');
+    document.getElementById('referralBox').classList.add('show');
+    document.getElementById('referralUrl').textContent = SITE_URL;
+  }
+
+  function copyLink() {
+    navigator.clipboard.writeText(SITE_URL).then(() => {
+      const btn = document.querySelector('.copy-btn');
+      btn.textContent = '已複製！';
+      setTimeout(() => btn.textContent = '複製連結', 2000);
+    });
+  }
+
+  document.getElementById('nameInput').addEventListener('input', function() {
+    this.classList.remove('error');
+  });
+  document.getElementById('schoolInput').addEventListener('input', function() {
+    this.classList.remove('error');
+    document.getElementById('errorMsg').classList.remove('show');
+  });
+  document.getElementById('emailInput').addEventListener('input', function() {
+    this.classList.remove('error');
+    document.getElementById('errorMsg').classList.remove('show');
+  });
+
+  lucide.createIcons();
+
+  // ── 漢堡選單 ──
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+  });
+  document.addEventListener('click', e => {
+    if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
+      navLinks.classList.remove('open');
+    }
+  });
+</script>
+</body>
+</html>
