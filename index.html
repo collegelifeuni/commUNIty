@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>commUNIty — 找到真的能一起做事的人</title>
+<title>comm<span style="background:linear-gradient(90deg,#7c3aed 0%,#d946ef 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">UNI</span>ty — 找到真的能一起做事的人</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
@@ -139,7 +139,7 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 0 24px 80px;
+    padding: 40px 24px 40px;
     position: relative;
     z-index: 5;
   }
@@ -807,7 +807,7 @@
 <!-- ──────────── HERO SECTION ──────────── -->
 <section class="hero-section" id="heroSection">
   <nav>
-    <div class="logo" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="cursor:pointer;">commUNIty</div>
+    <div class="logo" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="cursor:pointer;">comm<span style="background:linear-gradient(90deg,#7c3aed 0%,#d946ef 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">UNI</span>ty</div>
     <div class="nav-links" id="navLinks">
       <a href="#">關於</a>
       <a href="#">功能</a>
@@ -958,7 +958,7 @@
     <button class="back-btn" onclick="closeContact()">
       <i data-lucide="arrow-left" style="width:18px;height:18px;stroke-width:2.5;"></i>
     </button>
-    <div class="logo" onclick="closeContact()" style="cursor:pointer;">commUNIty</div>
+    <div class="logo" onclick="closeContact()" style="cursor:pointer;">comm<span style="background:linear-gradient(90deg,#7c3aed 0%,#d946ef 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">UNI</span>ty</div>
     <div style="width:80px;"></div>
   </nav>
   <div class="contact-inner">
@@ -1046,8 +1046,11 @@
     expect: 'entry.2048573265',
     contact: 'entry.1825339179',
   };
-  const SITE_URL = 'https://collegelifeuni.github.io/commUNIty';
+  const SITE_URL = 'https://collegelifeuni.github.io/comm<span style="background:linear-gradient(90deg,#7c3aed 0%,#d946ef 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">UNI</span>ty';
   const FORM_URL = `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse`;
+
+  history.scrollRestoration = 'manual';
+  window.scrollTo(0, 0);
 
   const SHEET_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRisHi2woYaC2FsETQ5oiy7KQWC2_bqKK3DWJVpN17eerXYzVa_WrJUtStI1t1FWQgJmZxPiXtKRjp5/pub?output=csv';
 
