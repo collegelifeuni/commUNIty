@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>comm<span style="background:linear-gradient(90deg,#7c3aed 0%,#d946ef 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">UNI</span>ty — 找到真的能一起做事的人</title>
+<title>commUNIty — 找到真的能一起做事的人</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
@@ -55,7 +55,7 @@
   }
   .deco-blob-2 {
     width: 440px; height: 380px;
-    background: radial-gradient(circle, rgba(124,58,237,0.78), transparent 65%);
+    background: radial-gradient(circle, #7c3aedc7, transparent 65%);
     top: -5%; right: -6%;
     animation: float2 16s ease-in-out infinite;
   }
@@ -153,13 +153,13 @@
     border-radius: 999px;
     padding: 5px 16px;
     font-size: 12px;
-    color: var(--purple);
+    color: #a855f7;
     letter-spacing: 0.8px;
     text-transform: uppercase;
     margin-bottom: 36px;
   }
   .badge-dot {
-    width: 6px; height: 6px;
+    width: 7px; height: 7px;
     border-radius: 50%;
     background: #55cf82;
     animation: pulse 2s ease-in-out infinite;
@@ -170,14 +170,14 @@
     font-family: 'Outfit', sans-serif;
     font-size: clamp(60px, 11vw, 112px);
     font-weight: 800;
-    line-height: 0.95;
+    line-height: 1.08;
     letter-spacing: -4px;
     color: #0f0a1e;
     margin-bottom: 30px;
   }
   .hero-heading em {
     font-style: normal;
-    background: linear-gradient(90deg, #7c3aed 0%, #d946ef 100%);
+    background: linear-gradient(90deg, #f97316 0%, #ec4899 55%, #a855f7 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -216,6 +216,43 @@
     background: #1a0f3e;
   }
   .hero-cta:active { transform: scale(0.98); }
+
+  .hero-cta-wrap {
+    position: relative;
+    display: inline-block;
+    border-radius: 999px;
+  }
+  @property --aura-angle {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg;
+  }
+  .hero-cta-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 999px;
+    background: conic-gradient(from var(--aura-angle), #f97316, #ec4899, #a855f7, #7c3aed, #ec4899, #f97316);
+    filter: blur(8px);
+    opacity: 0.5;
+    z-index: 0;
+    animation: aura-flow 5s linear infinite, aura-pulse 2.2s ease-in-out infinite;
+  }
+  @media (hover: hover) {
+    .hero-cta-wrap::before { visibility: hidden; }
+    .hero-cta-wrap:hover::before { visibility: visible; }
+  }
+  .hero-cta {
+    position: relative;
+    z-index: 1;
+  }
+  @keyframes aura-flow {
+    to { --aura-angle: 360deg; }
+  }
+  @keyframes aura-pulse {
+    0%, 100% { opacity: 0.5; filter: blur(8px); }
+    50%       { opacity: 1;   filter: blur(5px); }
+  }
 
   /* ── Features strip in hero ── */
   .hero-features {
@@ -380,7 +417,7 @@
   .cta-btn {
     width: 100%;
     padding: 14px;
-    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #d946ef 100%);
+    background: linear-gradient(135deg, #f97316 0%, #ec4899 55%, #a855f7 100%);
     border: none;
     border-radius: 12px;
     font-family: 'Outfit', sans-serif;
@@ -389,10 +426,11 @@
     color: #fff;
     cursor: pointer;
     letter-spacing: 0.3px;
-    transition: opacity 0.2s, transform 0.15s;
+    transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
     margin-top: 4px;
     position: relative;
     overflow: hidden;
+    box-shadow: -4px -4px 18px rgba(249,115,22,0.35), 4px 4px 18px rgba(168,85,247,0.35), 0 2px 10px rgba(236,72,153,0.2);
   }
   .cta-btn::after {
     content: '';
@@ -402,9 +440,12 @@
     transition: background 0.2s;
   }
   .cta-btn:hover::after { background: rgba(255,255,255,0.08); }
-  .cta-btn:hover { transform: translateY(-1px); }
+  .cta-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: -6px -6px 24px rgba(249,115,22,0.5), 6px 6px 24px rgba(168,85,247,0.5), 0 4px 14px rgba(236,72,153,0.3);
+  }
   .cta-btn:active { transform: scale(0.98); }
-  .cta-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  .cta-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
 
   .social-proof {
     display: flex;
@@ -450,7 +491,7 @@
   .check-circle {
     width: 52px; height: 52px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #7c3aed, #d946ef);
+    background: linear-gradient(135deg, #5cecb7, #0eb07a);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -532,7 +573,7 @@
     width: 100%;
     margin-top: 16px;
     padding: 14px;
-    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #d946ef 100%);
+    background: linear-gradient(135deg, #f97316 0%, #ec4899 55%, #a855f7 100%);
     border: none;
     border-radius: 12px;
     font-family: 'Outfit', sans-serif;
@@ -542,7 +583,7 @@
     cursor: pointer;
     letter-spacing: 0.3px;
     transition: transform 0.15s, box-shadow 0.2s;
-    box-shadow: 0 4px 20px rgba(124,58,237,0.35);
+    box-shadow: -4px -4px 18px rgba(249,115,22,0.35), 4px 4px 18px rgba(168,85,247,0.35), 0 2px 10px rgba(236,72,153,0.2);
     position: relative;
     overflow: hidden;
   }
@@ -556,7 +597,7 @@
   .submit2-btn:hover::after { background: rgba(255,255,255,0.08); }
   .submit2-btn:hover {
     transform: translateY(-1px);
-    box-shadow: 0 8px 28px rgba(124,58,237,0.45);
+    box-shadow: -6px -6px 24px rgba(249,115,22,0.5), 6px 6px 24px rgba(168,85,247,0.5), 0 4px 14px rgba(236,72,153,0.3);
   }
   .submit2-btn:active { transform: scale(0.98); }
   .submit2-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
@@ -807,10 +848,10 @@
 <!-- ──────────── HERO SECTION ──────────── -->
 <section class="hero-section" id="heroSection">
   <nav>
-    <div class="logo" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="cursor:pointer;">comm<span style="background:linear-gradient(90deg,#7c3aed 0%,#d946ef 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">UNI</span>ty</div>
+    <div class="logo" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="cursor:pointer;">comm<span style="background:linear-gradient(90deg,#f97316 0%,#ec4899 55%,#a855f7 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">UNI</span>ty</div>
     <div class="nav-links" id="navLinks">
       <a href="#">關於</a>
-      <a href="#">功能</a>
+      <a href="#" onclick="openFeature(); return false;">功能</a>
       <a href="#" onclick="scrollToContact(); return false;">聯絡</a>
     </div>
     <button class="hamburger" id="hamburger" aria-label="選單">
@@ -826,16 +867,18 @@
       大學生專屬平台
     </div>
 
-    <h1 class="hero-heading">找到真的能<br>一起<em>做事</em>的人</h1>
+    <h1 class="hero-heading">找到大學能<br>一起<em>築夢</em>的伴</h1>
 
     <p class="hero-sub">
       Side project、創業 MVP、作品集──找到志同道合的同學，一起交流、組隊、創作。
     </p>
 
-    <button class="hero-cta" onclick="scrollToForm()">
-      加入等待名單
-      <i data-lucide="arrow-right" style="width:16px;height:16px;stroke-width:2.5;"></i>
-    </button>
+    <div class="hero-cta-wrap">
+      <button class="hero-cta" onclick="scrollToForm()">
+        加入等待名單
+        <i data-lucide="arrow-right" style="width:16px;height:16px;stroke-width:2.5;"></i>
+      </button>
+    </div>
 
     <div class="hero-features">
       <div class="hero-feature-item">
@@ -884,11 +927,11 @@
       </button>
       <div class="social-proof">
         <div class="avatars">
-          <div class="av av-1">小</div>
-          <div class="av av-2">林</div>
-          <div class="av av-3">陳</div>
+          <div class="av av-1">洪</div>
+          <div class="av av-2">陳</div>
+          <div class="av av-3">C</div>
           <div class="av av-4">王</div>
-          <div class="av av-5">李</div>
+          <div class="av av-5">J</div>
         </div>
         <span class="proof-text">已有 <strong id="memberCount">247</strong> 位 同學加入等待</span>
       </div>
@@ -901,7 +944,7 @@
           <i data-lucide="check" style="width:26px;height:26px;stroke-width:2.5;color:#fff;"></i>
         </div>
         <div class="success-title">你已加入等待名單！</div>
-        <div class="success-sub">再花 30 秒告訴我們你的需求<br>讓我們做出更適合你的平台</div>
+        <div class="success-sub">再花 30 秒告訴我們你的需求<br>讓我們做出更適合你的平台～</div>
       </div>
 
       <div class="section-label">你最希望平台幫你完成什麼？（可多選）</div>
@@ -947,6 +990,26 @@
 </section>
 
 <!-- ──────────── CONTACT PAGE OVERLAY ──────────── -->
+<div id="featurePage" class="contact-page">
+  <div class="contact-deco">
+    <div class="deco-blob cb1"></div>
+    <div class="deco-blob cb2"></div>
+    <div class="deco-blob cb3"></div>
+  </div>
+  <div class="contact-frost"></div>
+  <nav class="contact-nav">
+    <button class="back-btn" onclick="closeFeature()">
+      <i data-lucide="arrow-left" style="width:18px;height:18px;stroke-width:2.5;"></i>
+    </button>
+    <div class="logo" onclick="closeFeature()" style="cursor:pointer;">comm<span style="background:linear-gradient(90deg,#f97316 0%,#ec4899 55%,#a855f7 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">UNI</span>ty</div>
+    <div style="width:80px;"></div>
+  </nav>
+  <div class="contact-inner" style="gap:16px;">
+    <i data-lucide="wrench" style="width:48px;height:48px;stroke-width:1.5;color:#a855f7;opacity:0.7;"></i>
+    <div style="font-size:20px;font-weight:600;color:var(--text);">開發中... 敬請期待</div>
+  </div>
+</div>
+
 <div id="contactPage" class="contact-page">
   <div class="contact-deco">
     <div class="deco-blob cb1"></div>
@@ -958,7 +1021,7 @@
     <button class="back-btn" onclick="closeContact()">
       <i data-lucide="arrow-left" style="width:18px;height:18px;stroke-width:2.5;"></i>
     </button>
-    <div class="logo" onclick="closeContact()" style="cursor:pointer;">comm<span style="background:linear-gradient(90deg,#7c3aed 0%,#d946ef 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">UNI</span>ty</div>
+    <div class="logo" onclick="closeContact()" style="cursor:pointer;">comm<span style="background:linear-gradient(90deg,#f97316 0%,#ec4899 55%,#a855f7 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">UNI</span>ty</div>
     <div style="width:80px;"></div>
   </nav>
   <div class="contact-inner">
@@ -1046,7 +1109,7 @@
     expect: 'entry.2048573265',
     contact: 'entry.1825339179',
   };
-  const SITE_URL = 'https://collegelifeuni.github.io/comm<span style="background:linear-gradient(90deg,#7c3aed 0%,#d946ef 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">UNI</span>ty';
+  const SITE_URL = 'https://collegelifeuni.github.io/commUNIty';
   const FORM_URL = `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse`;
 
   history.scrollRestoration = 'manual';
@@ -1069,6 +1132,22 @@
   function scrollToForm() {
     document.getElementById('formSection').scrollIntoView({ behavior: 'smooth' });
   }
+  function openFeature() {
+    const page = document.getElementById('featurePage');
+    page.style.display = 'flex';
+    requestAnimationFrame(() => page.classList.add('open'));
+    document.body.style.overflow = 'hidden';
+    lucide.createIcons();
+  }
+  function closeFeature() {
+    const page = document.getElementById('featurePage');
+    page.classList.remove('open');
+    setTimeout(() => {
+      page.style.display = 'none';
+      document.body.style.overflow = '';
+    }, 250);
+  }
+
   function scrollToContact() {
     const page = document.getElementById('contactPage');
     page.style.display = 'flex';
@@ -1244,6 +1323,9 @@
   document.getElementById('emailInput').addEventListener('input', function() {
     this.classList.remove('error');
     document.getElementById('errorMsg').classList.remove('show');
+  });
+  document.getElementById('emailInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') handleStep1();
   });
 
   lucide.createIcons();
